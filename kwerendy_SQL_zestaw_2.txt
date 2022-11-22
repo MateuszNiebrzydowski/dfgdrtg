@@ -1,0 +1,5 @@
+Zadanie 1
+
+a) DELETE FROM postac WHERE rodzaj='wiking' AND wiek > 50 AND nazwa != 'Bjorn';
+
+b)  
