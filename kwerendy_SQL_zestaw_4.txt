@@ -1,5 +1,0 @@
-Zadanie 1
-
-1. SELECT AVG(waga) FROM kreatura WHERE rodzaj = 'wiking';
-2. SELECT rodzaj, AVG(waga), COUNT(*) FROM kreatura GROUP BY rodzaj;
-3. SELECT rodzaj, AVG(2022-YEAR(dataUr)) FROM kreatura GROUP BY rodzaj;
