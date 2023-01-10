@@ -15,3 +15,19 @@ Zadanie 2
 1.  SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika), GROUP_CONCAT(' ', kreatura.nazwa) FROM wyprawa JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy JOIN kreatura ON uczestnicy.id_uczestnika=kreatura.idKreatury GROUP BY wyprawa.nazwa;
 
 2. SELECT etapy_wyprawy.idEtapu, sektor.nazwa, kreatura.nazwa FROM etapy_wyprawy JOIN sektor ON etapy_wyprawy.sektor=sektor.id_sektora JOIN wyprawa ON etapy_wyprawy.idWyprawy=wyprawa.id_wyprawy JOIN kreatura ON wyprawa.kierownik=kreatura.idKreatury GROUP BY etapy_wyprawy.idEtapu ORDER BY wyprawa.data_rozpoczecia, etapy_wyprawy.kolejnosc;
+
+Zadanie 3
+
+1. SELECT sektor.nazwa, IFNULL(COUNT(etapy_wyprawy.sektor), '0') AS 'ilosc_odwiedzin' FROM sektor LEFT JOIN etapy_wyprawy ON sektor.id_sektora=etapy_wyprawy.sektor GROUP BY sektor.nazwa;
+
+2. SELECT kreatura.nazwa, IF(COUNT(uczestnicy.id_wyprawy)>0, 'bral udzial w wyprawie', 'nie bral udzialu w wyprawie') AS 'czy_bral_udzial' FROM kreatura LEFT JOIN uczestnicy ON kreatura.idKreatury=uczestnicy.id_uczestnika GROUP BY kreatura.nazwa;
+
+Zadanie 4
+
+1. SELECT wyprawa.nazwa, IFNULL(SUM(LENGTH(etapy_wyprawy.dziennik)), '0') AS 'dlugosc' FROM wyprawa LEFT JOIN etapy_wyprawy ON wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy GROUP BY wyprawa.nazwa HAVING dlugosc < 400;
+
+2. SELECT wyprawa.nazwa, IFNULL((SUM(zasob.waga*ekwipunek.ilosc)/COUNT(ekwipunek.idKreatury)), '0') AS 'srednia' FROM wyprawa LEFT JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy LEFT JOIN ekwipunek ON uczestnicy.id_uczestnika=ekwipunek.IdKreatury LEFT JOIN zasob ON ekwipunek.idZasobu=zasob.idZasobu GROUP BY wyprawa.nazwa;
+
+Zadanie 5
+
+1. SELECT kreatura.nazwa, GROUP_CONCAT(" ", DATEDIFF(wyprawa.data_rozpoczecia, kreatura.dataUr)) AS 'ile_dni' FROM kreatura JOIN uczestnicy ON kreatura.idKreatury=uczestnicy.id_uczestnika JOIN wyprawa ON uczestnicy.id_wyprawy=wyprawa.id_wyprawy JOIN etapy_wyprawy ON wyprawa.id_wyprawy=etapy_wyprawy.idWyprawy WHERE etapy_wyprawy.sektor=7 GROUP BY kreatura.nazwa;
