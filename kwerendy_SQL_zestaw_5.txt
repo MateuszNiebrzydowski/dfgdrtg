@@ -1,0 +1,17 @@
+Zadanie 1
+
+1. CREATE TABLE kreatura (SELECT * FROM wikingowie.kreatura);
+CREATE TABLE uczestnicy (SELECT * FROM wikingowie.uczestnicy);
+CREATE TABLE etapy_wyprawy (SELECT * FROM wikingowie.etapy_wyprawy);
+CREATE TABLE sektor (SELECT * FROM wikingowie.sektor);
+CREATE TABLE wyprawa (SELECT * FROM wikingowie.wyprawa);
+
+2. SELECT nazwa FROM kreatura WHERE idKreatury NOT IN (SELECT id_uczestnika FROM uczestnicy);
+
+3. SELECT wyprawa.nazwa, SUM(ekwipunek.ilosc) FROM wyprawa JOIN uczestnicy ON uczestnicy.id_wyprawy=wyprawa.id_wyprawy JOIN ekwipunek ON ekwipunek.idKreatury=uczestnicy.id_uczestnika GROUP BY wyprawa.nazwa;
+
+Zadanie 2
+
+1.  SELECT wyprawa.nazwa, COUNT(uczestnicy.id_uczestnika), GROUP_CONCAT(' ', kreatura.nazwa) FROM wyprawa JOIN uczestnicy ON wyprawa.id_wyprawy=uczestnicy.id_wyprawy JOIN kreatura ON uczestnicy.id_uczestnika=kreatura.idKreatury GROUP BY wyprawa.nazwa;
+
+2. SELECT etapy_wyprawy.idEtapu, sektor.nazwa, kreatura.nazwa FROM etapy_wyprawy JOIN sektor ON etapy_wyprawy.sektor=sektor.id_sektora JOIN wyprawa ON etapy_wyprawy.idWyprawy=wyprawa.id_wyprawy JOIN kreatura ON wyprawa.kierownik=kreatura.idKreatury GROUP BY etapy_wyprawy.idEtapu ORDER BY wyprawa.data_rozpoczecia, etapy_wyprawy.kolejnosc;
